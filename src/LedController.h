@@ -16,5 +16,6 @@ void doTapTurnOnTapTurnOffLed1(LedState *ledState);
 void doTapTurnOnTapTurnOffLed(LedButtonInfo *State);
 void doTurnOnLedOnButtonPressedAndHoldController();
 void doTapTapLedController();
+void doTapTurnOnTapTurnOffLed_1(LedButtonInfo *State);
 
 #endif // _LEDCONTROLLER_H
