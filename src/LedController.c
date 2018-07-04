@@ -26,7 +26,7 @@ void doTapTurnOnTapTurnOffLed(LedButtonInfo *State)
 
   if(State->currentLedState == LED_OFF)
   {
-    if(button == BUTTON_PRESSED || button != State->previousButtonState)
+    if(button == BUTTON_PRESSED && button != State->previousButtonState)
     {
       State->currentLedState = LED_ON;
       turnLed(LED_ON);
@@ -34,26 +34,25 @@ void doTapTurnOnTapTurnOffLed(LedButtonInfo *State)
     }
     else
       State->previousButtonState = button;
-  }
-}
-
-void doTapTurnOnTapTurnOffLed_1(LedButtonInfo *State)
-{
-  ButtonState button;
-  button = getButtonState();
-
-  if(State->currentLedState == LED_ON)
+    }
+  else
   {
     if(button == BUTTON_RELEASED && button != State->previousButtonState)
-    {
-      State->currentLedState = LED_OFF;
-      turnLed(LED_OFF);
       State->previousButtonState = button;
-    }
     else
-      State->previousButtonState = button;
+    {
+      if(button == BUTTON_RELEASED && button != State->previousButtonState)
+      {
+        State->currentLedState = LED_OFF;
+        turnLed(LED_OFF);
+        State->previousButtonState = button;
+      }
+      else
+        State->previousButtonState = button;
+    }
   }
 }
+
 
 void doTurnOnLedOnButtonPressedAndHoldController(){
   while(1){

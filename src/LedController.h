@@ -8,6 +8,7 @@ typedef struct  LedButtonInfo LedButtonInfo;
 struct LedButtonInfo {
   LedState currentLedState;
   ButtonState previousButtonState;
+  //LedState previousledState;
 };
 
 void turnOnledIfButtonIsPressed(void);
