@@ -19,40 +19,63 @@ void doTapTurnOnTapTurnOffLed1(LedState *ledState)
       *ledState = LED_OFF;
 }
 
-void doTapTurnOnTapTurnOffLed(LedButtonInfo *State)
+
+ void doTapTurnOnTapTurnOffLed(LedButtonInfo *State)
 {
   ButtonState button;
   button = getButtonState();
 
-  if(State->currentLedState == LED_OFF)
+  if(State->currentLedState == LED_OFF)  //if led is off
   {
-    if(button == BUTTON_PRESSED && button != State->previousButtonState)
-    {
-      State->currentLedState = LED_ON;
-      turnLed(LED_ON);
-      State->previousButtonState = button;
-    }
-    else
-      State->previousButtonState = button;
-    }
-  else
-  {
-    if(button == BUTTON_RELEASED && button != State->previousButtonState)
-      State->previousButtonState = button;
-    else
-    {
-      if(button == BUTTON_RELEASED && button != State->previousButtonState)
+      if(State->previousButtonState == BUTTON_RELEASED)  //if previous button is released
       {
-        State->currentLedState = LED_OFF;
-        turnLed(LED_OFF);
-        State->previousButtonState = button;
+          if(button == BUTTON_PRESSED) //current button is pressed
+          {
+            State->currentLedState = LED_OFF;
+            turnLed(LED_ON);
+            State->previousButtonState = button;
+          }
+          else // current button is released
+          {
+            State->currentLedState = LED_OFF;
+            State->previousButtonState = button;
+          }
+       }
+      else  // if previous button is pressed
+      {
+          if(button == BUTTON_RELEASED) //current button is released
+          {
+            State->currentLedState = LED_ON;
+            State->previousButtonState = button;
+          }
       }
-      else
-        State->previousButtonState = button;
-    }
-  }
+   }
+   else // led is on
+   {
+      if(State->previousButtonState == BUTTON_RELEASED) //previous button is released
+      {
+          if(button == BUTTON_PRESSED) //current button is pressed
+          {
+            State->currentLedState = LED_ON;
+            State->previousButtonState = button;
+          }
+          else  // current button is released
+          {
+            State->currentLedState = LED_ON;
+            State->previousButtonState = button;
+          }
+      }
+      else //previous button is pressed
+      {
+          if(button == BUTTON_RELEASED)  // current button is released
+          {
+            turnLed(LED_OFF);
+            State->currentLedState = LED_OFF;
+            State->previousButtonState = button;
+          }
+      }
+   }
 }
-
 
 void doTurnOnLedOnButtonPressedAndHoldController(){
   while(1){
