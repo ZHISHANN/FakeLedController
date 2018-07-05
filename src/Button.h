@@ -10,6 +10,6 @@
    BUTTON_RELEASED = 0,
  } ButtonState;
 
-int getButtonState(void);
+ButtonState getButtonState(void);
 
 #endif // _BUTTON_H
